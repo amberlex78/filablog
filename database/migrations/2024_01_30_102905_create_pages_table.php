@@ -13,7 +13,7 @@ return new class () extends Migration {
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Page::class, 'page_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Page::class)->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
