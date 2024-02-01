@@ -172,7 +172,7 @@ body {
     height: 100%;
     max-height: 100%;
     overflow: hidden;
-    
+
 }
 
 body{
@@ -199,8 +199,8 @@ h1{
 }
 
 h2{
-    font-size: 22px; 
-    margin: 0; 
+    font-size: 22px;
+    margin: 0;
     padding: 0;
     padding-left: 16px;
     border-bottom: 1px solid #333;
@@ -392,13 +392,15 @@ select option:hover {
 }
 input:autofill,
 input:-internal-autofill-selected {
-    background-color: transparent;
-    box-shadow: none;
+
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 input,
 select,
 textarea
 {
+    color-scheme: dark;
     color: var(--white);
     font-size: 15px;
     border: none;
