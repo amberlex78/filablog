@@ -18,17 +18,17 @@ class PageSeeder extends Seeder
                 'title' => 'About Us',
                 'slug' => Str::slug('About Us'),
                 'content' => fake()->text(500),
-                'is_published' => 1,
+                'published' => 1,
             ], [
                 'title' => 'Payment',
                 'slug' => Str::slug('Payment'),
                 'content' => fake()->text(500),
-                'is_published' => 1,
+                'published' => 1,
             ], [
                 'title' => 'Service',
                 'slug' => Str::slug('Service'),
                 'content' => fake()->text(500),
-                'is_published' => 1,
+                'published' => 1,
             ])
             ->create();
     }

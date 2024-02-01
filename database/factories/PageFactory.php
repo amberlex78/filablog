@@ -24,7 +24,7 @@ class PageFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'content' => fake()->text(500),
-            'is_published' => rand(0, 1) % 2,
+            'published' => rand(0, 1) % 2,
         ];
     }
 }

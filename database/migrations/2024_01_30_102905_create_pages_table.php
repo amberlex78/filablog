@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->boolean('show_on_page')->default(true);
             $table->text('description')->nullable();
             $table->mediumText('content');
-            $table->boolean('is_published')->default(false);
+            $table->boolean('published')->default(false);
             $table->unsignedSmallInteger('position')->default(1);
             $table->timestamps();
         });

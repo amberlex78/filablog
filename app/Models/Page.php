@@ -22,7 +22,7 @@ use Illuminate\Support\Carbon;
  * @property int $show_on_page
  * @property string|null $description
  * @property string $content
- * @property int $is_published
+ * @property int $published
  * @property int $position
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -50,7 +50,7 @@ class Page extends Model
         'show_on_page',
         'description',
         'content',
-        'is_published',
+        'published',
         'position',
     ];
 
@@ -69,4 +69,9 @@ class Page extends Model
     {
         return $this->hasMany(Page::class);
     }
+
+    protected $casts = [
+        'published' => 'boolean',
+        'show_on_page' => 'boolean',
+    ];
 }
