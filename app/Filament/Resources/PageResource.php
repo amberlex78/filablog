@@ -20,16 +20,16 @@ class PageResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\Section::make('Content page')->schema([
-                Forms\Components\Grid::make()->schema([
+            Forms\Components\Group::make()->schema([
+                Forms\Components\Section::make('Page content')->schema([
                     Forms\Components\TextInput::make('title')
                         ->required()
                         ->minLength(2)
                         ->maxLength(255)
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn (
-                            string $operation,
-                            string $state,
+                            ?string   $operation,
+                            ?string   $state,
                             Forms\Set $set,
                         ) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                     Forms\Components\TextInput::make('slug')
@@ -37,22 +37,25 @@ class PageResource extends Resource
                         ->minLength(2)
                         ->maxLength(255)
                         ->unique(ignoreRecord: true),
-                ]),
-                Forms\Components\Textarea::make('description')->rows(3),
-                Forms\Components\MarkdownEditor::make('content')->required()->minLength(5),
-            ])->collapsible()->columnSpan(2),
+                    Forms\Components\Textarea::make('description')
+                        ->rows(3)
+                        ->columnSpanFull(),
+                    Forms\Components\MarkdownEditor::make('content')
+                        ->required()
+                        ->minLength(10)
+                        ->columnSpanFull()
+                ])->columns()->collapsible()->persistCollapsed(),
+            ])->columnSpan(['md' => 2, 'lg' => 2]),
 
             Forms\Components\Group::make()->schema([
-                Forms\Components\Section::make()->schema([
-                    Forms\Components\Grid::make()->schema([
-                        Forms\Components\Placeholder::make('created_at')->content(
-                            fn (?Page $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
-                        ),
-                        Forms\Components\Placeholder::make('updated_at')->content(
-                            fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'
-                        ),
-                    ])
-                ])->collapsible()->persistCollapsed(),
+                Forms\Components\Section::make('Dates')->schema([
+                    Forms\Components\Placeholder::make('created_at')->content(
+                        fn (?Page $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
+                    ),
+                    Forms\Components\Placeholder::make('updated_at')->content(
+                        fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'
+                    ),
+                ])->columns()->collapsible()->persistCollapsed(),
 
                 Forms\Components\Section::make('Image')->schema([
                     Forms\Components\FileUpload::make('image')
@@ -61,8 +64,9 @@ class PageResource extends Resource
                         ->disk('public')
                         ->directory('page'),
                     Forms\Components\Toggle::make('show_on_page'),
-                ])->collapsible()
-            ])->columnSpan(1),
+                ])->collapsible()->persistCollapsed()
+            ])->columnSpan(['md' => 2, 'lg' => 1])
+
         ])->columns(3);
     }
 
