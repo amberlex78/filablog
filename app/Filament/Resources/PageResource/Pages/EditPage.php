@@ -13,6 +13,7 @@ class EditPage extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('Save changes')->action('save'),
             Actions\DeleteAction::make(),
         ];
     }
