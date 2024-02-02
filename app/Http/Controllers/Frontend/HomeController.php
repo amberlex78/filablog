@@ -11,7 +11,6 @@ class HomeController extends FrontendController
 {
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-
         return View('frontend.home.index');
     }
 }
