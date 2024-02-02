@@ -25,7 +25,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
-            ->sidebarFullyCollapsibleOnDesktop()
+            //->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarCollapsibleOnDesktop()
             ->id('admin')
             ->path('admin')
             ->login()
