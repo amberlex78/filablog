@@ -42,6 +42,7 @@ class PageResource extends Resource
     {
         return $form->schema([
             Group::make()->schema([
+
                 Section::make('Page content')->schema([
                     TextInput::make('title')
                         ->required()
@@ -66,9 +67,12 @@ class PageResource extends Resource
                         ->minLength(10)
                         ->columnSpanFull()
                 ])->columns()->collapsible()->persistCollapsed(),
+
             ])->columnSpan(['md' => 2, 'lg' => 2]),
 
+
             Group::make()->schema([
+
                 Section::make('Dates')->schema([
                     Placeholder::make('created_at')->content(
                         fn (?Page $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
@@ -86,6 +90,7 @@ class PageResource extends Resource
                         ->directory('page'),
                     Toggle::make('show_on_page'),
                 ])->collapsible()->persistCollapsed()
+
             ])->columnSpan(['md' => 2, 'lg' => 1])
 
         ])->columns(3);
@@ -122,6 +127,11 @@ class PageResource extends Resource
                     ->sortable()
                     ->date()
                     ->toggleable(),
+                TextColumn::make('deleted_at')
+                    ->label('Deleted')
+                    ->sortable()
+                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
