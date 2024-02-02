@@ -22,6 +22,7 @@ return new class () extends Migration {
             $table->mediumText('content');
             $table->boolean('published')->default(false);
             $table->unsignedSmallInteger('position')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
