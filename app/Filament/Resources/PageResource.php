@@ -73,7 +73,6 @@ class PageResource extends Resource
 
 
             Group::make()->schema([
-
                 Section::make('Dates')->schema([
                     Placeholder::make('created_at')->content(
                         fn (?Page $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
@@ -92,7 +91,6 @@ class PageResource extends Resource
                         ->directory('page'),
                     Toggle::make('show_on_page'),
                 ])->collapsible()->persistCollapsed()
-
             ])->columnSpan(['md' => 2, 'lg' => 1])
 
         ])->columns(3);
@@ -175,5 +173,4 @@ class PageResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
-
 }

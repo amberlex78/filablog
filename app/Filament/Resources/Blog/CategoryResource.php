@@ -26,8 +26,6 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $slug = 'blog/categories';
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationGroup = 'Blog';
@@ -38,73 +36,66 @@ class CategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Group::make()->schema([
-                    Section::make('Category content')->schema([
-                        TextInput::make('name')
-                            ->required()
-                            ->minLength(2)
-                            ->maxLength(255)
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn (
-                                ?string $operation,
-                                ?string $state,
-                                Forms\Set $set,
-                            ) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+        return $form->schema([
+            Group::make()->schema([
+                Section::make('Category content')->schema([
+                    TextInput::make('name')
+                        ->required()
+                        ->minLength(2)
+                        ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn (
+                            ?string $operation,
+                            ?string $state,
+                            Forms\Set $set,
+                        ) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                    TextInput::make('slug')
+                        ->required()
+                        ->minLength(2)
+                        ->maxLength(255)
+                        ->unique(ignoreRecord: true),
+                    MarkdownEditor::make('description')
+                        ->required()
+                        ->minLength(10)
+                        ->columnSpanFull(),
+                    Toggle::make('enabled'),
+                ])->columns()->collapsible()->persistCollapsed(),
 
-                        TextInput::make('slug')
-                            ->required()
-                            ->minLength(2)
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-
-                        MarkdownEditor::make('description')
-                            ->required()
-                            ->minLength(10)
-                            ->columnSpanFull(),
-
-                        Toggle::make('enabled'),
-
-
-                    ])->columns()->collapsible()->persistCollapsed(),
-
-                    Section::make('SEO')->schema([
-                        TextInput::make('seo_title')
-                            ->minLength(2)
-                            ->maxLength(60)
-                            ->columnSpanFull(),
-
-                        Textarea::make('seo_description')
-                            ->minLength(2)
-                            ->maxLength(160)
-                            ->rows(2)
-                            ->columnSpanFull(),
-                    ])->columns()->collapsible()->collapsed()->persistCollapsed(),
-                ])->columnSpan(['md' => 2, 'lg' => 2]),
+                Section::make('SEO')->schema([
+                    TextInput::make('seo_title')
+                        ->minLength(2)
+                        ->maxLength(60)
+                        ->columnSpanFull(),
+                    Textarea::make('seo_description')
+                        ->minLength(2)
+                        ->maxLength(160)
+                        ->rows(2)
+                        ->columnSpanFull(),
+                ])->columns()->collapsible()->collapsed()->persistCollapsed(),
+            ])->columnSpan(['md' => 2, 'lg' => 2]),
 
 
-                Group::make()->schema([
-                    Section::make('Dates')->schema([
-                        Placeholder::make('created_at')->content(
-                            fn (?Category $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
-                        ),
-                        Placeholder::make('updated_at')->content(
-                            fn (?Category $record): string => $record ? $record->updated_at->diffForHumans() : '-'
-                        ),
-                    ])->columns()->collapsible()->persistCollapsed(),
+            Group::make()->schema([
+                Section::make('Dates')->schema([
+                    Placeholder::make('created_at')->content(
+                        fn (?Category $record): string => $record ? $record->created_at->toFormattedDateString() : '-'
+                    ),
+                    Placeholder::make('updated_at')->content(
+                        fn (?Category $record): string => $record ? $record->updated_at->diffForHumans() : '-'
+                    ),
+                ])->columns()->collapsible()->persistCollapsed(),
 
-                    Section::make('Image')->schema([
-                        FileUpload::make('image')
-                            ->hiddenLabel()
-                            ->image()
-                            ->maxSize(5120)
-                            ->disk('public')
-                            ->directory(Category::IMG_BLOG_CATEGORY),
-                    ])->collapsible()->persistCollapsed()
-                ])->columnSpan(['md' => 2, 'lg' => 1])
+                Section::make('Image')->schema([
+                    FileUpload::make('image')
+                        ->hiddenLabel()
+                        ->image()
+                        ->maxSize(5120)
+                        ->disk('public')
+                        ->directory(Category::IMG_BLOG_CATEGORY),
+                ])->collapsible()->persistCollapsed()
+            ])->columnSpan(['md' => 2, 'lg' => 1])
 
-            ])->columns(3);
+        ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -133,7 +124,6 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->date()
                     ->toggleable(),
-
             ])
             ->filters([
                 //
