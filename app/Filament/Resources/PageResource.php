@@ -65,7 +65,8 @@ class PageResource extends Resource
                     MarkdownEditor::make('content')
                         ->required()
                         ->minLength(10)
-                        ->columnSpanFull()
+                        ->columnSpanFull(),
+                    Toggle::make('published'),
                 ])->columns()->collapsible()->persistCollapsed(),
 
             ])->columnSpan(['md' => 2, 'lg' => 2]),
@@ -84,6 +85,7 @@ class PageResource extends Resource
 
                 Section::make('Image')->schema([
                     FileUpload::make('image')
+                        ->hiddenLabel()
                         ->image()
                         ->maxSize(5120)
                         ->disk('public')
