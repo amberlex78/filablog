@@ -18,13 +18,13 @@ class PageFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->name;
-
         return [
-            'title' => $title,
+            'title' => $title = $this->faker->unique()->sentence(3),
             'slug' => Str::slug($title),
-            'content' => fake()->text(500),
+            'content' => $this->faker->realText(500),
             'published' => rand(0, 1) % 2,
+            'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
+            'updated_at' => $this->faker->dateTimeBetween('-5 month'),
         ];
     }
 }
