@@ -11,5 +11,11 @@ lint:
 clean:
 	@$(LARAVEL_ARTISAN) optimize:clear
 
+DB_FRESH_SEED_COMMAND = $(LARAVEL_EXEC) rm -rf ./storage/app/public && $(LARAVEL_ARTISAN) migrate:fresh --seed
 db-fresh-seed:
-	@$(LARAVEL_ARTISAN) migrate:fresh --seed
+	@if [ "$(APP_ENV)" = "production" ]; then \
+		read -p "Are you sure you want to execute db-fresh-seed in the current environment? (y/n) " answer; \
+		[ "$$answer" = "y" ] && $(DB_FRESH_SEED_COMMAND); \
+	else \
+		$(DB_FRESH_SEED_COMMAND); \
+	fi
