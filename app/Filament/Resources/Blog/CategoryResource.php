@@ -125,6 +125,7 @@ class CategoryResource extends Resource
                     ->date()
                     ->toggleable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
