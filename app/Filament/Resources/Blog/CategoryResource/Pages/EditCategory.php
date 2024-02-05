@@ -3,11 +3,15 @@
 namespace App\Filament\Resources\Blog\CategoryResource\Pages;
 
 use App\Filament\Resources\Blog\CategoryResource;
+use App\Filament\Traits\DeleteRecordImage;
+use App\Models\Blog\Category;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditCategory extends EditRecord
 {
+    use DeleteRecordImage;
+
     protected static string $resource = CategoryResource::class;
 
     protected function getRedirectUrl(): string
@@ -19,7 +23,7 @@ class EditCategory extends EditRecord
     {
         return [
             Actions\Action::make('Save changes')->action('save'),
-            Actions\DeleteAction::make(),
+            $this->deleteImage(Category::class),
         ];
     }
 }
