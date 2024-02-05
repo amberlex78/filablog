@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Storage;
 
 trait DeleteRecordImage
 {
-    protected function deleteImage($recordClass): Actions\DeleteAction
+    protected function deleteImage(): Actions\DeleteAction
     {
-        return Actions\DeleteAction::make()->after(function ($record) use ($recordClass) {
+        return Actions\DeleteAction::make()->after(function ($record) {
             if ($record->image) {
                 Storage::disk('public')->delete($record->image);
             }
