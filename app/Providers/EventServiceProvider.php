@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Blog\Category;
+use App\Models\Page;
 use App\Observers\Blog\CategoryObserver;
+use App\Observers\PageObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +29,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Page::observe(PageObserver::class);
         Category::observe(CategoryObserver::class);
     }
 
