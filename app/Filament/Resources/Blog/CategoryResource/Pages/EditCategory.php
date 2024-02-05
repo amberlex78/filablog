@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Blog\CategoryResource\Pages;
 
 use App\Filament\Resources\Blog\CategoryResource;
 use App\Filament\Traits\DeleteRecordImage;
-use App\Models\Blog\Category;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
