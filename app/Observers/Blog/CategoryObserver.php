@@ -3,9 +3,9 @@
 namespace App\Observers\Blog;
 
 use App\Models\Blog\Category;
-use Illuminate\Support\Facades\Storage;
+use App\Observers\BaseObserver;
 
-class CategoryObserver
+class CategoryObserver extends BaseObserver
 {
     /**
      * Handle the Category "created" event.
@@ -20,9 +20,7 @@ class CategoryObserver
      */
     public function updated(Category $category): void
     {
-        if ($category->isDirty('image') && $category->getOriginal('image') !== null) {
-            Storage::disk('public')->delete($category->getOriginal('image'));
-        }
+        $this->handleRemoveImageOnUpdated($category);
     }
 
     /**
@@ -30,9 +28,7 @@ class CategoryObserver
      */
     public function deleted(Category $category): void
     {
-        if (! is_null($category->image)) {
-            Storage::disk('public')->delete($category->image);
-        }
+        $this->handleRemoveImageOnDeleted($category);
     }
 
     /**

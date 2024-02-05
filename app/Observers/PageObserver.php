@@ -3,9 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Page;
-use Illuminate\Support\Facades\Storage;
 
-class PageObserver
+class PageObserver extends BaseObserver
 {
     /**
      * Handle the Page "created" event.
@@ -20,9 +19,7 @@ class PageObserver
      */
     public function updated(Page $page): void
     {
-        if ($page->isDirty('image') && $page->getOriginal('image') !== null) {
-            Storage::disk('public')->delete($page->getOriginal('image'));
-        }
+        $this->handleRemoveImageOnUpdated($page);
     }
 
     /**
@@ -30,9 +27,7 @@ class PageObserver
      */
     public function deleted(Page $page): void
     {
-        if (! is_null($page->image)) {
-            Storage::disk('public')->delete($page->image);
-        }
+        $this->handleRemoveImageOnDeleted($page);
     }
 
     /**
