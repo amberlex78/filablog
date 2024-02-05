@@ -15,6 +15,13 @@ abstract class BaseObserver
 
     protected function handleRemoveImageOnDeleted($model): void
     {
+        if (! is_null($model->image) && $model->deleted_at === null) {
+            Storage::disk('public')->delete($model->image);
+        }
+    }
+
+    protected function handleRemoveImageOnForceDeleted($model): void
+    {
         if (! is_null($model->image)) {
             Storage::disk('public')->delete($model->image);
         }

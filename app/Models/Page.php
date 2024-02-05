@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @property int $position
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read Collection<int, Page> $children
  * @property-read int|null $children_count
  * @property-read Page|null $parent

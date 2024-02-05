@@ -43,6 +43,6 @@ class PageObserver extends BaseObserver
      */
     public function forceDeleted(Page $page): void
     {
-        //
+        $this->handleRemoveImageOnForceDeleted($page);
     }
 }
