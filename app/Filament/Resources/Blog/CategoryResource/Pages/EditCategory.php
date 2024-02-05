@@ -22,7 +22,7 @@ class EditCategory extends EditRecord
     {
         return [
             Actions\Action::make('Save changes')->action('save'),
-            $this->deleteImage(),
+            Actions\DeleteAction::make(),
         ];
     }
 }
