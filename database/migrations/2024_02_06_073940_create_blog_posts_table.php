@@ -18,8 +18,8 @@ return new class () extends Migration {
             $table->string('image')->nullable();
             $table->boolean('image_show')->default(true);
             $table->mediumText('content');
-            $table->boolean('published')->default(false);
-            $table->date('publish_at')->nullable();
+            $table->boolean('enabled')->default(false);
+            $table->date('published_at')->nullable();
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
             $table->timestamps();

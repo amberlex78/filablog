@@ -22,7 +22,7 @@ class PageFactory extends Factory
             'title' => $title = $this->faker->unique()->sentence(3),
             'slug' => Str::slug($title),
             'content' => $this->faker->realText(500),
-            'published' => $this->faker->boolean(),
+            'enabled' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month'),
         ];

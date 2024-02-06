@@ -16,9 +16,9 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -37,6 +37,7 @@ class CategoryResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
+
             Group::make()->schema([
                 Section::make('Category content')->schema([
                     TextInput::make('name')
@@ -113,15 +114,15 @@ class CategoryResource extends Resource
                 TextColumn::make('slug')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                CheckboxColumn::make('enabled')
+                ToggleColumn::make('enabled')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->sortable()
                     ->date()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('updated_at')
-                    ->label('Updated')
+                    ->label('Last Updated')
                     ->sortable()
                     ->date()
                     ->toggleable(),

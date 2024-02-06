@@ -17,15 +17,14 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\RestoreBulkAction;
-use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -66,7 +65,7 @@ class PageResource extends Resource
                         ->required()
                         ->minLength(10)
                         ->columnSpanFull(),
-                    Toggle::make('published'),
+                    Toggle::make('enabled'),
                 ])->columns()->collapsible()->persistCollapsed(),
 
             ])->columnSpan(['md' => 2, 'lg' => 2]),
@@ -115,7 +114,7 @@ class PageResource extends Resource
                 TextColumn::make('slug')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                CheckboxColumn::make('published')
+                ToggleColumn::make('enabled')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Created')
@@ -123,23 +122,17 @@ class PageResource extends Resource
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->label('Updated')
+                    ->label('Last Updated')
                     ->sortable()
                     ->date()
                     ->toggleable(),
-                TextColumn::make('deleted_at')
-                    ->label('Deleted')
-                    ->sortable()
-                    ->date()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
                 RestoreAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

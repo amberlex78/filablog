@@ -57,11 +57,11 @@ class Page extends Model
         'image_show',
         'description',
         'content',
-        'published',
+        'enabled',
         'position',
     ];
     protected $casts = [
-        'published' => 'boolean',
+        'enabled' => 'boolean',
         'image_show' => 'boolean',
     ];
 

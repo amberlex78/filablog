@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property bool $image_show
  * @property string $content
  * @property bool $published
- * @property string|null $publish_at
+ * @property string|null $published_at
  * @property string|null $seo_title
  * @property string|null $seo_description
  * @property Carbon|null $created_at
@@ -48,8 +48,8 @@ class Post extends Model
         'image',
         'image_show',
         'content',
-        'published',
-        'publish_at',
+        'enabled',
+        'published_at',
         'seo_title',
         'seo_description',
     ];
@@ -63,7 +63,8 @@ class Post extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'published' => 'boolean',
+        'enabled' => 'boolean',
+        'published_at' => 'date',
         'image_show' => 'boolean',
     ];
 

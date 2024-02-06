@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->boolean('image_show')->default(false);
             $table->text('description')->nullable();
             $table->mediumText('content');
-            $table->boolean('published')->default(false);
+            $table->boolean('enabled')->default(false);
             $table->unsignedSmallInteger('position')->default(1);
             $table->softDeletes();
             $table->timestamps();
