@@ -50,7 +50,7 @@ class Page extends Model
         'title',
         'slug',
         'image',
-        'show_on_page',
+        'image_show',
         'description',
         'content',
         'published',
@@ -75,6 +75,6 @@ class Page extends Model
 
     protected $casts = [
         'published' => 'boolean',
-        'show_on_page' => 'boolean',
+        'image_show' => 'boolean',
     ];
 }

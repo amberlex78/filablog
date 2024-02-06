@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
-            $table->boolean('show_on_page')->default(true);
+            $table->boolean('image_show')->default(false);
             $table->text('description')->nullable();
             $table->mediumText('content');
             $table->boolean('published')->default(false);
