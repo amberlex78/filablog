@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property string $slug
  * @property string|null $image
+ * @property bool $image_show
  * @property string|null $description
  * @property bool $enabled
  * @property string|null $seo_title
@@ -41,6 +42,7 @@ class Category extends Model
         'name',
         'slug',
         'image',
+        'image_show',
         'description',
         'enabled',
         'seo_title',
@@ -57,5 +59,6 @@ class Category extends Model
      */
     protected $casts = [
         'enabled' => 'boolean',
+        'image_show' => 'boolean',
     ];
 }

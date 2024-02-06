@@ -92,6 +92,7 @@ class CategoryResource extends Resource
                         ->maxSize(5120)
                         ->disk('public')
                         ->directory(Category::IMG_BLOG_CATEGORY),
+                    Toggle::make('image_show'),
                 ])->collapsible()->persistCollapsed()
             ])->columnSpan(['md' => 2, 'lg' => 1])
 
