@@ -5,13 +5,13 @@ namespace App\Filament\Resources\Blog;
 use App\Filament\Resources\Blog\PostResource\Pages;
 use App\Models\Blog\Post;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -118,7 +118,7 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 ImageColumn::make('image'),
                 TextColumn::make('title')
-                    ->description(fn (Post $record): string => (string)$record->category?->name)
+                    ->description(fn (Post $record): string => $record->category ? $record->category->name : '—')
                     ->sortable(),
                 TextColumn::make('slug')
                     ->sortable()
