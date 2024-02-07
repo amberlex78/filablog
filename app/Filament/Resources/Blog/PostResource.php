@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Blog;
 use App\Filament\Resources\Blog\PostResource\Pages;
 use App\Models\Blog\Post;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
@@ -56,14 +57,18 @@ class PostResource extends Resource
                         ->minLength(2)
                         ->maxLength(255)
                         ->unique(ignoreRecord: true),
+                    Select::make('blog_category_id')
+                        ->relationship('category', 'name')
+                        ->searchable()
+                        ->required(),
+                    DatePicker::make('published_at')
+                        ->label('Published Date')
+                        ->default(now()),
                     MarkdownEditor::make('content')
                         ->required()
                         ->minLength(10)
                         ->columnSpanFull(),
                     Toggle::make('enabled'),
-                    DatePicker::make('published_at')
-                        ->label('Published Date')
-                        ->default(now()),
                 ])->columns()->collapsible()->persistCollapsed(),
 
                 Section::make('SEO')->schema([
@@ -113,15 +118,17 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 ImageColumn::make('image'),
                 TextColumn::make('title')
-                    ->sortable()
-                    ->searchable(),
+                    ->description(fn (Post $record): string => (string)$record->category?->name)
+                    ->sortable(),
                 TextColumn::make('slug')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 ToggleColumn::make('enabled')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('published_at')
                     ->label('Published Date')
+                    ->tooltip(fn (Post $record): string => $record->published_at?->isPast() ? 'Published' : 'Draft')
                     ->color(fn (Post $record): string => $record->published_at?->isPast() ? 'success' : 'gray')
                     ->sortable()
                     ->date()
@@ -130,7 +137,7 @@ class PostResource extends Resource
                     ->label('Created')
                     ->sortable()
                     ->date()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
                     ->sortable()
