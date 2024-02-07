@@ -36,7 +36,7 @@ password: password
 
 ### Adminer
 
-Adminer server running on [http://localhost:8080](http://localhost:8080) or [http://0.0.0.0:8080](http://0.0.0.0:8080)
+Adminer server running on [http://localhost:8080](http://localhost:8080)
 
 Used theme: [Adminer eok8177 dark theme](https://github.com/eok8177/adminer.css)
 
