@@ -2,18 +2,41 @@
 
 ## Setup
 
-Locally you should have `php` and `composer` installed.
+Locally you should have `php`, `composer` and `npm` installed.
 
+#### Local
+```
+OS: Linux Mint 21.3
+Docker version 25.0.2
+Docker Compose version v2.24.5
+
+PHP 8.2.15 (cli)
+Composer 2.6.6
+Node 18.19.0
+NPM 10.3.0
+```
+
+#### Init
 ```bash
 git clone git@github.com:amberlex78/filablog.git
 cd filablog
-composer install
 cp .env.example .env
-php artisan key:generate
-php artisan storage:link
-npm i
-npm run build
+```
+#### Install
+```
+composer install
+npm i && npm run build
+```
+
+#### Docker up
+```
 sail up -d
+sail artisan key:generate
+sail artisan storage:link
+```
+
+#### Database
+```
 sail artisan migrate --seed
 ```
 
