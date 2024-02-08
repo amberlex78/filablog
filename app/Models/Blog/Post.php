@@ -43,6 +43,7 @@ class Post extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'blog_category_id',
         'title',
         'slug',
         'image',
