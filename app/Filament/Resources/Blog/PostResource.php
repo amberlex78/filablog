@@ -21,6 +21,8 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -60,6 +62,7 @@ class PostResource extends Resource
                     Select::make('blog_category_id')
                         ->relationship('category', 'name')
                         ->searchable()
+                        ->preload()
                         ->required(),
                     DatePicker::make('published_at')
                         ->label('Published Date')
@@ -118,8 +121,12 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 ImageColumn::make('image'),
                 TextColumn::make('title')
-                    ->description(fn (Post $record): string => $record->category ? $record->category->name : '—')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('category.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('slug')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -146,7 +153,11 @@ class PostResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                TernaryFilter::make('enabled'),
+                SelectFilter::make('category')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
