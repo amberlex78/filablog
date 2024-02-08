@@ -56,8 +56,7 @@ class CategoryResource extends Resource
                         ->maxLength(255)
                         ->unique(ignoreRecord: true),
                     MarkdownEditor::make('description')
-                        ->required()
-                        ->minLength(10)
+                        ->minLength(3)
                         ->columnSpanFull(),
                     Toggle::make('enabled'),
                 ])->columns()->collapsible()->persistCollapsed(),
