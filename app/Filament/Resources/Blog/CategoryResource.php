@@ -69,7 +69,6 @@ class CategoryResource extends Resource
                     Textarea::make('seo_description')
                         ->minLength(2)
                         ->maxLength(160)
-                        ->rows(2)
                         ->columnSpanFull(),
                 ])->columns()->collapsible()->collapsed()->persistCollapsed(),
             ])->columnSpan(['md' => 2, 'lg' => 2]),
